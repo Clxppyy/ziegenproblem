@@ -1,72 +1,31 @@
-import java.util.List;
 import java.util.Objects;
 
 public class DoorSelection extends DoorCreation implements ReadingInput{
 
-    private final String label;
-
-    boolean activator;
-
     public DoorSelection(String label) {
         super(label);
-        this.label = label;
     }
 
-    void startingCreation(){
-        //Polymorphism
-        DoorCreation starterCreator = new DoorSelection("Starter");
-        starterCreator.creation();
-        if (starterCreator.messenger(false)){
-            activator = true;
-        }
-    }
-
-    void selection(){
-        if(iList.contains(readingInt())){
-            messenger(firstSelect);
-            if(i == 1){
-                System.out.println("Wollen Sie weiterhin bei Ihrer Wahl: " + i + " bleiben?");
-                if (readingAnswer().equals("Ja")){
-                    if(originalList.contains(label) && Objects.equals(label, car)){
-                        System.out.println("SIE HABEN EIN AUTO GEWONNEN!");
-                    }
-                    else {
-                        System.out.println("Schade, nur ein Schaf!");
-                    }
-                }
-                else {
-                    if(clonedList.contains(label) && Objects.equals(label, car)){
-                        System.out.println("SIE HABEN EIN AUTO GEWONNEN!");
-                    }
-                    else {
-                        System.out.println("Schade, nur ein Schaf!");
-                    }
+    void selection() {
+        int iterator = 0;
+        int markCarAt = 0;
+        int input = readingInt();
+        if (input > 0 && input <= 3) {
+            System.out.println("Wollen Sie weiterhin bei Ihrer Wahl: " + messenger(input) + " bleiben?");
+            for (DoorCreation door : objectList) {
+                if (door.getLabel("Auto", iterator)) {
+                    iterator = markCarAt;
+                    System.out.println(markCarAt);
+                } else {
+                    iterator++;
                 }
             }
-            else {
-                System.out.println("Wollen Sie weiterhin bei Ihrer Wahl: " + i + " bleiben?");
-                if (readingAnswer().equals("Ja")){
-                    if(clonedList.contains(label) && Objects.equals(label, car)){
-                        System.out.println("SIE HABEN EIN AUTO GEWONNEN!");
-                    }
-                    else {
-                        System.out.println("Schade, nur ein Schaf!");
-                    }
-                }
-                else {
-                    if(clonedList.contains(label) && Objects.equals(label, car)){
-                        System.out.println("SIE HABEN EIN AUTO GEWONNEN!");
-                    }
-                    else {
-                        System.out.println("Schade, nur ein Schaf!");
-                    }
-                }
-                }
+            if (readingAnswer().equals("Ja") && input == markCarAt + 1) {
+                System.out.println("SIE HABEN EIN AUTO GEWONNEN!");
+            } else if (readingAnswer().equals("Nein")){
+                //Hier ein weiterer Versuch mit Hinweis auf Schaf
+                selection();
             }
-        else{
-            System.out.println("Entschuldigung, aber diese Auswahl gibt es nicht.");
-            selection();
-        }
-
         }
     }
+}

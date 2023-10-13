@@ -6,7 +6,7 @@ public interface ReadingInput {
     default int readingInt(){
         try{
             Scanner scannerObj = new Scanner(System.in);
-            return scannerObj.nextInt();
+            return Integer.parseInt(scannerObj.nextLine());
         }
         catch (InputMismatchException e){
             System.out.println("Entschuldigung, leider können Sie nur Zahlen eintippen.");
@@ -18,14 +18,15 @@ public interface ReadingInput {
     default String readingAnswer(){
         try{
             Scanner scannerObj = new Scanner(System.in);
-            if (Objects.equals(scannerObj.nextLine(), "Ja")){
-                return scannerObj.nextLine();
+            String input = scannerObj.nextLine();
+            if (Objects.equals(input, "Ja")){
+                return input;
             }
-            else if (Objects.equals(scannerObj.nextLine(), "Nein")){
-                return scannerObj.nextLine();
+            else if (Objects.equals(input, "Nein")){
+                return input;
             }
             else {
-                System.out.println("Entschuldigung, aber das ist kein möglicher Operator.");
+                System.out.println("Entschuldigung, das ist kein möglicher Operator.\nVersuchen Sie es bitte erneut mit 'Ja' oder 'Nein'.");
                 readingAnswer();
             }
         }

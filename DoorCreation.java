@@ -1,113 +1,72 @@
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class DoorCreation implements Cloneable{
-    int i;
+public class DoorCreation{
 
-    //Empty constructor needed for submitting the objects (goat or car)
-
-    public DoorCreation(String label){
+    public DoorCreation(String label) {
+        super();
     }
 
     //Declarations
-
-    final String goat = "Ziege";
-    final String car = "Auto";
     int carCounter;
     double goatCounter;
-    int number = 1;
+    int counter = 0;
 
     //List-Declarations
+    ArrayList<DoorCreation> objectList = new ArrayList<>();
 
-    ArrayList<Integer> iList = new ArrayList<>();
-    ArrayList<DoorCreation> originalList = new ArrayList<>();
-    ArrayList<DoorCreation> clonedList = new ArrayList<>();
-
-    //Messenger-Switches (also Declarations (i have no fcking clue how event listeners work in java and nor I have
-    //the nerves to try them out now...))
-
-    boolean originListSwitch;
-    boolean cloneListSwitch;
-    boolean firstSelect;
-
+    //Getter
+    public Boolean getLabel(String label, int iterator){
+        if (Objects.equals(label, objectList.get(iterator))){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 
     //Creating 3 Objects to determine the one with the car
-
     void creation(){
-
-        for (int i = 1; i < 3; i++){
-            this.i = i;
-            iList.add(i);
-
-            String obj = getRandomObj(goat, car);
-            //System.out.println(obj);                <---              //FOR SHOWING RESULTS OUT-COMMENT!
-
-            if(i == 1){
-                DoorCreation door = new DoorCreation(obj);
-                originalList.add(door);
-                messenger(originListSwitch = true);
+        DoorCreation goat = new DoorCreation("Ziege");
+        DoorCreation car = new DoorCreation("Auto");
+        for (int i = 1; i <= 3; i++){
+            if(getRandomObj()){
+                objectList.add(goat);
+                messenger(i);
             }
-
-            for (DoorCreation originalObject : originalList) {
-                DoorCreation clonedObject = originalObject.clone();
-                clonedList.add(clonedObject);
-                number++;
-                if(number == 2){
-                    iList.add(3);
-                }
-                messenger(cloneListSwitch = true);
+            else {
+                objectList.add(car);
+                messenger(i);
             }
         }
     }
 
     //Messenger
-
-    Boolean messenger(boolean bool){
-        if(!firstSelect){
-
-            if (originListSwitch){
-                System.out.println(i + ". Tür");
-                originListSwitch = false;
-            }
-            if (cloneListSwitch){
-                System.out.println(number + ". Tür");
-                cloneListSwitch = false;
-            }
+    Boolean messenger(int i){ //eventueller fix
+        if (counter == 0 && i == 0){
+            counter++;
         }
-        else{
-            if(originalList.contains(goat) || clonedList.contains(goat)){
-                System.out.println(i + ". Tür: Ziege");
-            }
+        else {
+            System.out.println(i + ". Tür");
         }
         return true;
     }
 
     //Section, where the sorting is taking place
-
     public int getRandomNumber(int min, int max) {
         return (int) ((Math.random() * (max - min)) + min);
     }
 
-    public String getRandomObj(String goat, String car){
-        if (getRandomNumber(1, 3) == 1 && carCounter == 0 && goatCounter < 1){
+    public Boolean getRandomObj(){
+        if (getRandomNumber(1, 4) == 1 && carCounter == 0 && goatCounter < 1){
             goatCounter = goatCounter + 0.5;
-            return goat;
+            return true;
         }
         else if (carCounter != 1){
             carCounter++;
-            return car;
+            return false;
         }
         goatCounter++;
-        return goat;
-    }
-
-    //Object-Cloning via Mother-Child relation
-
-    public DoorCreation clone() {
-        try {
-            return (DoorCreation) super.clone();
-        } catch (CloneNotSupportedException e) {
-            throw new AssertionError();
-        }
+        return true;
     }
 }
