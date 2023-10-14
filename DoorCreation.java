@@ -31,7 +31,7 @@ public class DoorCreation{
         DoorCreation car = new DoorCreation("Auto");
         for (int i = 1; i <= 3; i++){
             if(getRandomObj()){
-                objectList.add(goat);
+                objectList.add(goat); //Problem: objectList bleibt size 0, bzw. goat und Auto werden nt hinzugefügt
                 messenger(i);
             }
             else {

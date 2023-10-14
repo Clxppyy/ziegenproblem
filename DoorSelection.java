@@ -11,8 +11,10 @@ public class DoorSelection extends DoorCreation implements ReadingInput{
         int markCarAt = 0;
         int input = readingInt();
         if (input > 0 && input <= 3) {
-            System.out.println("Wollen Sie weiterhin bei Ihrer Wahl: " + messenger(input) + " bleiben?");
-            for (DoorCreation door : objectList) {
+            System.out.println("Wollen Sie weiterhin bei Ihrer Wahl bleiben:");
+            messenger(input);
+            System.out.println(objectList);
+            for (DoorCreation door : objectList) { //Kann nicht ausgeführt werden, solange das Problem in DoorCreation behoben wird
                 if (door.getLabel("Auto", iterator)) {
                     iterator = markCarAt;
                     System.out.println(markCarAt);

@@ -8,7 +8,7 @@ public interface ReadingInput {
             Scanner scannerObj = new Scanner(System.in);
             return Integer.parseInt(scannerObj.nextLine());
         }
-        catch (InputMismatchException e){
+        catch (InputMismatchException e){ //funktioniert nicht korrekt
             System.out.println("Entschuldigung, leider können Sie nur Zahlen eintippen.");
             readingInt();
         }
