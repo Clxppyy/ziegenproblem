@@ -4,7 +4,6 @@ import java.util.Objects;
 public class DoorCreation{
 
     public DoorCreation(String label) {
-        super();
     }
 
     //Declarations
@@ -31,7 +30,7 @@ public class DoorCreation{
         DoorCreation car = new DoorCreation("Auto");
         for (int i = 1; i <= 3; i++){
             if(getRandomObj()){
-                objectList.add(goat); //Problem: objectList bleibt size 0, bzw. goat und Auto werden nt hinzugefügt
+                objectList.add(goat);
                 messenger(i);
             }
             else {
@@ -42,7 +41,7 @@ public class DoorCreation{
     }
 
     //Messenger
-    Boolean messenger(int i){ //eventueller fix
+    Boolean messenger(int i){
         if (counter == 0 && i == 0){
             counter++;
         }

@@ -1,32 +1,49 @@
-import java.util.Objects;
-
 public class DoorSelection extends DoorCreation implements ReadingInput{
 
-    public DoorSelection(String label) {
+    DoorCreation doorCreation;
+
+    public DoorSelection(String label, DoorCreation doorCreation) {
         super(label);
+        this.doorCreation = doorCreation;
     }
 
     void selection() {
         int iterator = 0;
         int markCarAt = 0;
+        int markGoatAt = 0;
         int input = readingInt();
         if (input > 0 && input <= 3) {
-            System.out.println("Wollen Sie weiterhin bei Ihrer Wahl bleiben:");
-            messenger(input);
-            System.out.println(objectList);
-            for (DoorCreation door : objectList) { //Kann nicht ausgeführt werden, solange das Problem in DoorCreation behoben wird
+            for (DoorCreation door : doorCreation.objectList) {
                 if (door.getLabel("Auto", iterator)) {
-                    iterator = markCarAt;
+                    markCarAt = iterator;
                     System.out.println(markCarAt);
+                    System.out.println(doorCreation.objectList.get(iterator));
                 } else {
                     iterator++;
+                    markGoatAt = iterator;
+                    System.out.println(markGoatAt);
                 }
             }
-            if (readingAnswer().equals("Ja") && input == markCarAt + 1) {
-                System.out.println("SIE HABEN EIN AUTO GEWONNEN!");
+            System.out.println("Wollen Sie weiterhin bei Ihrer Wahl bleiben:");
+            messenger(input);
+            System.out.println("Eine Ziege befindet sich in:");
+            messenger(markGoatAt);
+            if (readingAnswer().equals("Ja")) {
+                if (input == markCarAt + 1){
+                    System.out.println("SIE HABEN EIN AUTO GEWONNEN!");
+                }
+                else {
+                    System.out.println("Schade... Dahinter befindet sich nur eine Ziege!");
+                }
             } else if (readingAnswer().equals("Nein")){
-                //Hier ein weiterer Versuch mit Hinweis auf Schaf
-                selection();
+                System.out.println("Welche Tür wollen Sie stattdessen öffnen?");
+                readingInt();
+                if (input == markCarAt + 1){
+                    System.out.println("SIE HABEN EIN AUTO GEWONNEN!");
+                }
+                else {
+                    System.out.println("Schade... Dahinter befindet sich nur eine Ziege!");
+                }
             }
         }
     }
