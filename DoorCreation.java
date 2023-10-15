@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class DoorCreation{
+public class DoorCreation implements ReadingInput{
 
     public DoorCreation(String label) {
     }
@@ -15,8 +15,8 @@ public class DoorCreation{
     ArrayList<DoorCreation> objectList = new ArrayList<>();
 
     //Getter
-    public Boolean getLabel(String label, int iterator){
-        if (Objects.equals(label, objectList.get(iterator))){
+    public Boolean getLabel(String label, int iterator, DoorCreation starter){
+        if (Objects.equals(label, starter.objectList.get(iterator))){
             return true;
         }
         else {
@@ -42,7 +42,7 @@ public class DoorCreation{
 
     //Messenger
     Boolean messenger(int i){
-        if (counter == 0 && i == 0){
+        if (counter == 0 && i == 0){ //Needs to be here so that I can start selection in Main Class without worrying about any unwanted outputs, i --> 0 for irrelevant outputs
             counter++;
         }
         else {
@@ -67,5 +67,45 @@ public class DoorCreation{
         }
         goatCounter++;
         return true;
+    }
+
+    void selection(DoorCreation starter) {
+        int iterator = 0;
+        int markCarAt = 0;
+        int markGoatAt = 0;
+        int input = readingInt();
+        if (input > 0 && input <= 3) {
+            for (DoorCreation door : starter.objectList) {
+                if (getLabel("Auto", iterator, starter)) {
+                    markCarAt = iterator;
+                    System.out.println("AUTO BEI:" + markCarAt);
+                } else {
+                    iterator++;
+                    markGoatAt = iterator;
+                    System.out.println("ZIEGE BEI:" + markGoatAt);
+                }
+            }
+            System.out.println("Wollen Sie weiterhin bei Ihrer Wahl bleiben:");
+            messenger(input);
+            System.out.println("Eine Ziege befindet sich in:");
+            messenger(markGoatAt);
+            if (readingAnswer().equals("Ja")) {
+                if (input == markCarAt + 1){
+                    System.out.println("SIE HABEN EIN AUTO GEWONNEN!");
+                }
+                else {
+                    System.out.println("Schade... Dahinter befindet sich nur eine Ziege!");
+                }
+            } else if (readingAnswer().equals("Nein")){
+                System.out.println("Welche Tür wollen Sie stattdessen öffnen?");
+                readingInt();
+                if (input == markCarAt + 1){
+                    System.out.println("SIE HABEN EIN AUTO GEWONNEN!");
+                }
+                else {
+                    System.out.println("Schade... Dahinter befindet sich nur eine Ziege!");
+                }
+            }
+        }
     }
 }
