@@ -3,10 +3,12 @@ import java.util.Objects;
 
 public class DoorCreation implements ReadingInput{
 
-    public DoorCreation(String label) {
+    public DoorCreation(DoorCreation label) {
+        this.label = label;
     }
 
     //Declarations
+    public DoorCreation label;
     int carCounter;
     double goatCounter;
     int counter = 0;
@@ -15,8 +17,8 @@ public class DoorCreation implements ReadingInput{
     ArrayList<DoorCreation> objectList = new ArrayList<>();
 
     //Getter
-    public Boolean getLabel(String label, int iterator, DoorCreation starter){
-        if (Objects.equals(label, starter.objectList.get(iterator))){
+    public Boolean getLabel(DoorCreation label, DoorCreation starter){
+        if (label == starter){
             return true;
         }
         else {
@@ -25,9 +27,9 @@ public class DoorCreation implements ReadingInput{
     }
 
     //Creating 3 Objects to determine the one with the car
-    void creation(){
-        DoorCreation goat = new DoorCreation("Ziege");
-        DoorCreation car = new DoorCreation("Auto");
+    void creation(DoorCreation starter){
+        DoorCreation goat = new DoorCreation(null);
+        DoorCreation car = new DoorCreation(null);
         for (int i = 1; i <= 3; i++){
             if(getRandomObj()){
                 objectList.add(goat);
@@ -36,6 +38,79 @@ public class DoorCreation implements ReadingInput{
             else {
                 objectList.add(car);
                 messenger(i);
+            }
+        }
+        if (starter.messenger(0)){
+            starter.selection(starter, car);
+        }
+    }
+
+    void selection(DoorCreation starter, DoorCreation car) {
+        int iterator = 0;
+        int markCarAt = 0;
+        int markGoatAt = 0;
+        ArrayList<Integer> goatMarker =  new ArrayList<>();
+        int input = readingInt();
+        if (input > 0 && input <= 3) {
+            for (DoorCreation door : starter.objectList) {
+                if (getLabel(car, door)) {
+                    markCarAt = iterator;
+                } else {
+                    markGoatAt = iterator;
+                    goatMarker.add(markGoatAt);
+                }
+                iterator++;
+            }
+            System.out.println("Eine Ziege befindet sich in:");
+            if(goatMarker.contains(input - 1)){ //So that another door is opened excluding the one the user chose
+                int forCounter = 0;
+                for (Integer Element: goatMarker){
+                    if(goatMarker.contains(input - 1)){
+                        goatMarker.remove(forCounter);
+                        messenger(goatMarker.get(0) + 1);
+                    }
+                    forCounter++;
+                }
+            }
+            else{
+                messenger(markGoatAt + 1);
+            }
+            System.out.println("Wollen Sie weiterhin bei Ihrer Wahl bleiben:");
+            messenger(input);
+            if (readingAnswer().equals("Ja")) {
+                checker(input, markCarAt);
+            } else {
+                System.out.println("Welche Tür wollen Sie stattdessen öffnen?");
+                int inputForChecker = readingInt();
+                checker(inputForChecker, markCarAt);
+            }
+        }
+        else{
+            System.out.println("Bitte einer der Türen auswählen!");
+            selection(starter, car);
+        }
+    }
+
+    //Checking for results
+    void checker(int input,int markCarAt){
+        if (input == markCarAt + 1){
+            System.out.println("SIE HABEN EIN AUTO GEWONNEN!");
+            System.out.println("Neuer Versuch?");
+            if (Objects.equals(readingAnswer(), "Ja")){
+                Main.main(null);
+            }
+            else {
+                System.exit(0);
+            }
+        }
+        else {
+            System.out.println("Schade... Dahinter befindet sich nur eine Ziege!");
+            System.out.println("Neuer Versuch?");
+            if (Objects.equals(readingAnswer(), "Nein")){
+                Main.main(null);
+            }
+            else {
+                System.exit(0);
             }
         }
     }
@@ -67,45 +142,5 @@ public class DoorCreation implements ReadingInput{
         }
         goatCounter++;
         return true;
-    }
-
-    void selection(DoorCreation starter) {
-        int iterator = 0;
-        int markCarAt = 0;
-        int markGoatAt = 0;
-        int input = readingInt();
-        if (input > 0 && input <= 3) {
-            for (DoorCreation door : starter.objectList) {
-                if (getLabel("Auto", iterator, starter)) {
-                    markCarAt = iterator;
-                    System.out.println("AUTO BEI:" + markCarAt);
-                } else {
-                    iterator++;
-                    markGoatAt = iterator;
-                    System.out.println("ZIEGE BEI:" + markGoatAt);
-                }
-            }
-            System.out.println("Wollen Sie weiterhin bei Ihrer Wahl bleiben:");
-            messenger(input);
-            System.out.println("Eine Ziege befindet sich in:");
-            messenger(markGoatAt);
-            if (readingAnswer().equals("Ja")) {
-                if (input == markCarAt + 1){
-                    System.out.println("SIE HABEN EIN AUTO GEWONNEN!");
-                }
-                else {
-                    System.out.println("Schade... Dahinter befindet sich nur eine Ziege!");
-                }
-            } else if (readingAnswer().equals("Nein")){
-                System.out.println("Welche Tür wollen Sie stattdessen öffnen?");
-                readingInt();
-                if (input == markCarAt + 1){
-                    System.out.println("SIE HABEN EIN AUTO GEWONNEN!");
-                }
-                else {
-                    System.out.println("Schade... Dahinter befindet sich nur eine Ziege!");
-                }
-            }
-        }
     }
 }
