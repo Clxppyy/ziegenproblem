@@ -49,7 +49,7 @@ public class DoorCreation implements ReadingInput{
     void selection(DoorCreation starter, DoorCreation car) {
         int iterator = 0;
         int markCarAt = 0;
-        int markGoatAt = 0;
+        int markGoatAt;
         ArrayList<Integer> goatMarker =  new ArrayList<>();
         int input = readingInt();
         if (input > 0 && input <= 3) {
@@ -97,6 +97,7 @@ public class DoorCreation implements ReadingInput{
             System.out.println("Neuer Versuch?");
             if (Objects.equals(readingAnswer(), "Ja")){
                 Main.main(null);
+
             }
             else {
                 System.exit(0);
@@ -107,6 +108,7 @@ public class DoorCreation implements ReadingInput{
             System.out.println("Neuer Versuch?");
             if (Objects.equals(readingAnswer(), "Ja")){
                 Main.main(null);
+                objectList = null; //pathetic attempt to eventuell clear the memory so the doors aren't always sorted the same
             }
             else {
                 System.exit(0);
