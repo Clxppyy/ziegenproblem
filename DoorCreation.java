@@ -45,10 +45,11 @@ public class DoorCreation implements ReadingInput{
         }
     }
 
+    //The actual game, selecting one object
     void selection(DoorCreation starter, DoorCreation car) {
         int iterator = 0;
         int markCarAt = 0;
-        int markGoatAt = 0;
+        int markGoatAt;
         ArrayList<Integer> goatMarker =  new ArrayList<>();
         int input = readingInt();
         if (input > 0 && input <= 3) {
@@ -62,18 +63,16 @@ public class DoorCreation implements ReadingInput{
                 iterator++;
             }
             System.out.println("Eine Ziege befindet sich in:");
-            if(goatMarker.contains(input - 1)){ //So that another door is opened excluding the one the user chose
-                int forCounter = 0;
-                for (Integer Element: goatMarker){
-                    if(goatMarker.contains(input - 1)){
-                        goatMarker.remove(forCounter);
-                        messenger(goatMarker.get(0) + 1);
-                    }
-                    forCounter++;
+            //So that another door is opened excluding the one the user chose
+            for (Integer Element: goatMarker) {
+                if (Element.equals(input - 1)) {
+                    goatMarker.remove(0);
+                    messenger(goatMarker.get(0) + 1);
                 }
-            }
-            else{
-                messenger(markGoatAt + 1);
+                else{
+                    messenger(goatMarker.get(0) + 1);
+                    break;
+                }
             }
             System.out.println("Wollen Sie weiterhin bei Ihrer Wahl bleiben:");
             messenger(input);
@@ -98,6 +97,7 @@ public class DoorCreation implements ReadingInput{
             System.out.println("Neuer Versuch?");
             if (Objects.equals(readingAnswer(), "Ja")){
                 Main.main(null);
+
             }
             else {
                 System.exit(0);
@@ -106,8 +106,9 @@ public class DoorCreation implements ReadingInput{
         else {
             System.out.println("Schade... Dahinter befindet sich nur eine Ziege!");
             System.out.println("Neuer Versuch?");
-            if (Objects.equals(readingAnswer(), "Nein")){
+            if (Objects.equals(readingAnswer(), "Ja")){
                 Main.main(null);
+                objectList = null; //pathetic attempt to eventuell clear the memory so the doors aren't always sorted the same
             }
             else {
                 System.exit(0);
