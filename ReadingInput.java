@@ -1,9 +1,11 @@
+package Ziegen;
+
 import java.util.InputMismatchException;
 import java.util.Objects;
 import java.util.Scanner;
 
-public interface ReadingInput {
-    default int readingInt(){
+public class ReadingInput {
+    static int readingInt(){
         try{
             Scanner scannerObj = new Scanner(System.in);
             return Integer.parseInt(scannerObj.nextLine());
@@ -15,7 +17,7 @@ public interface ReadingInput {
         return -1;
     }
 
-    default String readingAnswer(){
+    static String readingAnswer(){
         try{
             Scanner scannerObj = new Scanner(System.in);
             String input = scannerObj.nextLine();
