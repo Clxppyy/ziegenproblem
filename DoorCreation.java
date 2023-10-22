@@ -1,7 +1,9 @@
+package Ziegen;
+
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class DoorCreation implements ReadingInput{
+public class DoorCreation{
 
     public DoorCreation(DoorCreation label) {
         this.label = label;
@@ -51,7 +53,7 @@ public class DoorCreation implements ReadingInput{
         int markCarAt = 0;
         int markGoatAt;
         ArrayList<Integer> goatMarker =  new ArrayList<>();
-        int input = readingInt();
+        int input = ReadingInput.readingInt();
         if (input > 0 && input <= 3) {
             for (DoorCreation door : starter.objectList) {
                 if (getLabel(car, door)) {
@@ -76,11 +78,11 @@ public class DoorCreation implements ReadingInput{
             }
             System.out.println("Wollen Sie weiterhin bei Ihrer Wahl bleiben:");
             messenger(input);
-            if (readingAnswer().equals("Ja")) {
+            if (ReadingInput.readingAnswer().equals("Ja")) {
                 checker(input, markCarAt);
             } else {
                 System.out.println("Welche Tür wollen Sie stattdessen öffnen?");
-                int inputForChecker = readingInt();
+                int inputForChecker = ReadingInput.readingInt();
                 checker(inputForChecker, markCarAt);
             }
         }
@@ -95,7 +97,7 @@ public class DoorCreation implements ReadingInput{
         if (input == markCarAt + 1){
             System.out.println("SIE HABEN EIN AUTO GEWONNEN!");
             System.out.println("Neuer Versuch?");
-            if (Objects.equals(readingAnswer(), "Ja")){
+            if (Objects.equals(ReadingInput.readingAnswer(), "Ja")){
                 Main.main(null);
 
             }
@@ -106,7 +108,7 @@ public class DoorCreation implements ReadingInput{
         else {
             System.out.println("Schade... Dahinter befindet sich nur eine Ziege!");
             System.out.println("Neuer Versuch?");
-            if (Objects.equals(readingAnswer(), "Ja")){
+            if (Objects.equals(ReadingInput.readingAnswer(), "Ja")){
                 Main.main(null);
                 objectList = null; //pathetic attempt to eventuell clear the memory so the doors aren't always sorted the same
             }
