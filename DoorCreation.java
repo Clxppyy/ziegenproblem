@@ -105,12 +105,12 @@ public class DoorCreation{
                 System.out.println("Nein");
                 System.out.println("Welche Tür wollen Sie stattdessen öffnen?");
                 for (int i = 0; i < 2; i++) {
-                    if (call.get(i) == input || Objects.equals(call.get(i), goatMarker.get(0))){
+                    if (call.get(i) == input - 1 || Objects.equals(call.get(i), goatMarker.get(0))){
                         call.remove(i);
                     }
                     else{
-                        System.out.println(call.get(0) + 1);
-                        checker(call.get(0) + 1, markCarAt);
+                        System.out.println(call.get(i) + 1);
+                        checker(call.get(i) + 1, markCarAt);
                     }
                 }
             }
