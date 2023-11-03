@@ -24,6 +24,6 @@ If you start the program it will firstly ask you two things (in German, I transl
    At the end it will tell you the chance of winning with your chosen strategy. You can view all the prompts the program did by itself.
 
 I hope my program could help you :)
-Please mind that I'm not a professional programmer, as you maybe could tell by my coding skills. Still the program works with no issues, no worries. This was a volunteer project I did for fun, self-success and getting more into programming.
+Please mind that I'm not a professional programmer, as you maybe could tell by my coding skills. Still the program works with no issues, no worries. This was a volunteer project I did for fun, as a show-off for one of my labor-projects and getting more into programming.
 
 Clxppy
