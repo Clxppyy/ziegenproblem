@@ -14,14 +14,12 @@ public class Main{
         if (active || activeOfSwap){
             System.out.println("Ja");
             System.out.println("Soll die Entscheidung der auszuwählenden Türen immer geändert werden, wenn möglich?");
-            if(activeOfSwap){
+            if(activatorOfSwap() && activeOfSwap){
                 System.out.println("Ja");
-                activatorOfSwap();
                 starter.creation(starter);
             }
-            else if (active){
+            else if (activator() && active){
                 System.out.println("Nein");
-                activator();
                 starter.creation(starter);
             }
         }

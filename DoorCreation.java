@@ -52,10 +52,10 @@ public class DoorCreation{
 
     //The actual game, selecting one object
     void selection(DoorCreation starter, DoorCreation car) {
-        int iterator = 0;
-        int markCarAt = 0;
+        int iterator = 0; //could have also been not-initialized, if Java wouldn't cry because of line 93...
+        int markCarAt = 0; //same goes here.
         int markGoatAt;
-        int input = 0;
+        int input;
         ArrayList<Integer> goatMarker = new ArrayList<>();
         if (!Main.active && !Main.activeOfSwap) {
             input = ReadingInput.readingInt();
@@ -104,9 +104,10 @@ public class DoorCreation{
             else if(Main.activeOfSwap){
                 System.out.println("Nein");
                 System.out.println("Welche Tür wollen Sie stattdessen öffnen?");
-                for (int i = 0; i < 2; i++) {
+                for (int i = 0; i != 3; i++) {
                     if (call.get(i) == input - 1 || Objects.equals(call.get(i), goatMarker.get(0))){
-                        call.remove(i);
+                        //Nothing, just iterating here through the list. Removing the wrong values could harm the experiment,
+                        //as it would maybe skip the right value, which then would have to be right next to the deleted one.
                     }
                     else{
                         System.out.println(call.get(i) + 1);
@@ -129,12 +130,14 @@ public class DoorCreation{
             if (!Main.active && !Main.activeOfSwap) {
                 if (Objects.equals(ReadingInput.readingAnswer(), "Ja")){
                     Main.main(null);
+                    objectList = null;
                 }
                 else {
-                    System.exit(0);
+                    System.exit(4);
                 }
             }
             else {
+                call = new ArrayList<>(Arrays.asList(0, 1, 2));
                 Main.main(null);
             }
         }
@@ -146,7 +149,7 @@ public class DoorCreation{
                     Main.main(null);
                     objectList = null; //pathetic attempt to eventuell clear the memory so the doors aren't always sorted the same
                 } else {
-                    System.exit(0);
+                    System.exit(4);
                 }
             }
             else {
