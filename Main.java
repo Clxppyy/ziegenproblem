@@ -42,12 +42,16 @@ public class Main{
     }
 
     static boolean activator(){
-        if (counting < 1000){
+        if (counting <= 1000){
             if(!active){
                 active = true;
                 return false;
             }
             else{
+                if (counting == 1000){
+                    System.out.println("Gewinnwahrscheinlichkeit: " + ((double) DoorCreation.win / counting) * 100 + "%");
+                    System.exit(4);
+                }
                 counting++;
                 return true;
             }
@@ -56,12 +60,16 @@ public class Main{
     }
 
     static boolean activatorOfSwap(){
-        if (counting < 1000){
+        if (counting <= 1000){
             if(!activeOfSwap){
                 activeOfSwap = true;
                 return false;
             }
             else{
+                if (counting == 1000){
+                    System.out.println("Gewinnwahrscheinlichkeit: " + ((double) DoorCreation.win / counting) * 100 + "%");
+                    System.exit(4);
+                }
                 counting++;
                 return true;
             }

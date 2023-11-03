@@ -1,6 +1,5 @@
 package Ziegen;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
@@ -16,6 +15,7 @@ public class DoorCreation{
     int carCounter;
     double goatCounter;
     int counter = 0;
+    static int win;
 
     //List-Declarations
     ArrayList<DoorCreation> objectList = new ArrayList<>();
@@ -137,6 +137,7 @@ public class DoorCreation{
                 }
             }
             else {
+                win++;
                 call = new ArrayList<>(Arrays.asList(0, 1, 2));
                 Main.main(null);
             }
