@@ -1,6 +1,7 @@
 package Ziegen;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Objects;
 
 public class DoorCreation{
@@ -14,9 +15,11 @@ public class DoorCreation{
     int carCounter;
     double goatCounter;
     int counter = 0;
+    static int win;
 
     //List-Declarations
     ArrayList<DoorCreation> objectList = new ArrayList<>();
+    ArrayList<Integer> call = new ArrayList<>(Arrays.asList(0, 1, 2));
 
     //Getter
     public Boolean getLabel(DoorCreation label, DoorCreation starter){
@@ -49,11 +52,18 @@ public class DoorCreation{
 
     //The actual game, selecting one object
     void selection(DoorCreation starter, DoorCreation car) {
-        int iterator = 0;
-        int markCarAt = 0;
+        int iterator = 0; //could have also been not-initialized, if Java wouldn't cry because of line 93...
+        int markCarAt = 0; //same goes here.
         int markGoatAt;
-        ArrayList<Integer> goatMarker =  new ArrayList<>();
-        int input = ReadingInput.readingInt();
+        int input;
+        ArrayList<Integer> goatMarker = new ArrayList<>();
+        if (!Main.active && !Main.activeOfSwap) {
+            input = ReadingInput.readingInt();
+        }
+        else {
+            input = getRandomNumber(1, 4);
+            System.out.println(input);
+        }
         if (input > 0 && input <= 3) {
             for (DoorCreation door : starter.objectList) {
                 if (getLabel(car, door)) {
@@ -78,12 +88,32 @@ public class DoorCreation{
             }
             System.out.println("Wollen Sie weiterhin bei Ihrer Wahl bleiben:");
             messenger(input);
-            if (ReadingInput.readingAnswer().equals("Ja")) {
+            if (!Main.active && !Main.activeOfSwap) {
+                if (ReadingInput.readingAnswer().equals("Ja")) {
+                    checker(input, markCarAt);
+                } else {
+                    System.out.println("Welche Tür wollen Sie stattdessen öffnen?");
+                    int inputForChecker = ReadingInput.readingInt();
+                    checker(inputForChecker, markCarAt);
+                }
+            }
+            else if(Main.active){
+                System.out.println("Ja");
                 checker(input, markCarAt);
-            } else {
+            }
+            else if(Main.activeOfSwap){
+                System.out.println("Nein");
                 System.out.println("Welche Tür wollen Sie stattdessen öffnen?");
-                int inputForChecker = ReadingInput.readingInt();
-                checker(inputForChecker, markCarAt);
+                for (int i = 0; i != 3; i++) {
+                    if (call.get(i) == input - 1 || Objects.equals(call.get(i), goatMarker.get(0))){
+                        //Nothing, just iterating here through the list. Removing the wrong values could harm the experiment,
+                        //as it would maybe skip the right value, which then would have to be right next to the deleted one.
+                    }
+                    else{
+                        System.out.println(call.get(i) + 1);
+                        checker(call.get(i) + 1, markCarAt);
+                    }
+                }
             }
         }
         else{
@@ -94,26 +124,37 @@ public class DoorCreation{
 
     //Checking for results
     void checker(int input,int markCarAt){
-        if (input == markCarAt + 1){
+        if (input == markCarAt + 1){ //adding call-List here as an expression
             System.out.println("SIE HABEN EIN AUTO GEWONNEN!");
             System.out.println("Neuer Versuch?");
-            if (Objects.equals(ReadingInput.readingAnswer(), "Ja")){
-                Main.main(null);
-
+            if (!Main.active && !Main.activeOfSwap) {
+                if (Objects.equals(ReadingInput.readingAnswer(), "Ja")){
+                    Main.main(null);
+                    objectList = null;
+                }
+                else {
+                    System.exit(4);
+                }
             }
             else {
-                System.exit(0);
+                win++;
+                call = new ArrayList<>(Arrays.asList(0, 1, 2));
+                Main.main(null);
             }
         }
         else {
             System.out.println("Schade... Dahinter befindet sich nur eine Ziege!");
             System.out.println("Neuer Versuch?");
-            if (Objects.equals(ReadingInput.readingAnswer(), "Ja")){
-                Main.main(null);
-                objectList = null; //pathetic attempt to eventuell clear the memory so the doors aren't always sorted the same
+            if (!Main.active && !Main.activeOfSwap) {
+                if (Objects.equals(ReadingInput.readingAnswer(), "Ja")) {
+                    Main.main(null);
+                    objectList = null; //pathetic attempt to eventuell clear the memory so the doors aren't always sorted the same
+                } else {
+                    System.exit(4);
+                }
             }
             else {
-                System.exit(0);
+                Main.main(null);
             }
         }
     }
